@@ -35,10 +35,24 @@ jobs:
           MONACA_EMAIL: ${{ secrets.MONACA_EMAIL }}
     - name: Upload to Monaca Cloud
       run: npx monaca upload --force
-    - name: Build in Monaca Cloud
-      run: filename="android-debug-build.apk"; npx monaca remote build android --skipUpload --output "./$filename";
+    - name: Build Android (Debug)
+      run: filename="android-debug-build.apk"; npx monaca remote build android --skipUpload --build-type=debug --output "./$filename";
+    - name: Build Android (Release)
+      run: filename="android-release-build.apk"; npx monaca remote build android --skipUpload --build-type=release --output "./$filename";
+    - name: Build iOS (Debug)
+      run: filename="ios-debug-build.ipa"; npx monaca remote build android --skipUpload --build-type=debug --output "./$filename";
     - uses: actions/upload-artifact@v2
       with:
-        name: android build
+        name: android debug
         path: android-debug-build.apk
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v2
+      with:
+        name: android release
+        path: android-release-build.apk
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ios build
+        path: ios-debug-build.ipa
         if-no-files-found: error
