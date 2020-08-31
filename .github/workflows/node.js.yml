@@ -40,7 +40,9 @@ jobs:
     - name: Build Android (Release)
       run: filename="android-release-build.apk"; npx monaca remote build android --skipUpload --build-type=release --output "./$filename";
     - name: Build iOS (Debug)
-      run: filename="ios-debug-build.ipa"; npx monaca remote build android --skipUpload --build-type=debug --output "./$filename";
+      run: filename="ios-debug-build.ipa"; npx monaca remote build ios --skipUpload --build-type=debug --output "./$filename";
+    - name: Build iOS (Release)
+      run: filename="ios-release-build.ipa"; npx monaca remote build ios --skipUpload --build-type=release --output "./$filename";
     - uses: actions/upload-artifact@v2
       with:
         name: android debug
@@ -53,6 +55,11 @@ jobs:
         if-no-files-found: error
     - uses: actions/upload-artifact@v2
       with:
-        name: ios build
+        name: ios debug
         path: ios-debug-build.ipa
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ios release
+        path: ios-release-build.ipa
         if-no-files-found: error
