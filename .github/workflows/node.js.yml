@@ -37,5 +37,8 @@ jobs:
       run: npx monaca upload --force
     - name: Build in Monaca Cloud
       run: filename="$(date '+%d-%m-%y-%H:%M:%S')".apk; npx monaca remote build android --skipUpload --output "./$filename";
-    - name: List Project
-      run: ls -la;
+    - uses: actions/upload-artifact@v2
+      with:
+        name: $filename
+        path: $filename
+        if-no-files-found: error
