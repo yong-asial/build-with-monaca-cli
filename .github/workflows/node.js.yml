@@ -26,12 +26,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Packages
       run: npm i;
-    - name: List Project
-      run: ls -la;
+    - name: Build Project
+      run: echo "build";
     - name: Login to Monaca
       run: env; echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
       env:
           MONACA_PASSWORD: ${{ secrets.MONACA_PASSWORD }}
           MONACA_EMAIL: ${{ secrets.MONACA_EMAIL }}
-    - name: Build
-      run: echo build;
+    - name: Upload to Monaca Cloud
+      run: npx monaca upload --force
+    - name: Build in Monaca Cloud
+      run: filename="$(date '+%d-%m-%y-%H:%M:%S')".apk; npx monaca remote build android --skipUpload --output "./$filename";
+    - name: List Project
+      run: ls -la;
