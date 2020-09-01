@@ -7,3 +7,5 @@
 .vscode/
 typings/
 node_modules
+*.apk
+*.ipa
