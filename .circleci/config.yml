@@ -14,3 +14,31 @@ jobs:
       - run:
           name: Build
           command: echo "build"
+
+      - run:
+          name: Login To Monaca
+          command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
+
+      - run:
+          name: Upload to Monaca Cloud
+          command: npx monaca upload --force
+
+      - run:
+          name: Build Android (Debug)
+          command: npx monaca remote build android --skipUpload --build-type=debug --output "./android-debug-build.apk";
+
+      - run:
+          name: Build Android (release)
+          command: npx monaca remote build android --skipUpload --build-type=release --output "./android-release-build.apk";
+
+      - run:
+          name: Build ios (Debug)
+          command: npx monaca remote build ios --skipUpload --build-type=debug --output "./ios-debug-build.ipa";
+  
+      - run:
+          name: Build ios (release)
+          command: npx monaca remote build ios --skipUpload --build-type=release --output "./ios-release-build.ipa";
+
+      - run:
+          name: List Project Files
+          command: ls -la;
