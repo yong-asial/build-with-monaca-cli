@@ -24,40 +24,48 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Install Packages
       run: npm i;
+
     - name: Build Project
       run: echo "build";
+
     - name: Login to Monaca
       run: env; echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
       env:
           MONACA_PASSWORD: ${{ secrets.MONACA_PASSWORD }}
           MONACA_EMAIL: ${{ secrets.MONACA_EMAIL }}
+
     - name: Upload to Monaca Cloud
       run: npx monaca upload --force
+
     - name: Build Android (Debug)
       run: filename="android-debug-build.apk"; npx monaca remote build android --skipUpload --build-type=debug --output "./$filename";
-    - name: Build Android (Release)
-      run: filename="android-release-build.apk"; npx monaca remote build android --skipUpload --build-type=release --output "./$filename";
-    - name: Build iOS (Debug)
-      run: filename="ios-debug-build.ipa"; npx monaca remote build ios --skipUpload --build-type=debug --output "./$filename";
-    - name: Build iOS (Release)
-      run: filename="ios-release-build.ipa"; npx monaca remote build ios --skipUpload --build-type=release --output "./$filename";
     - uses: actions/upload-artifact@v2
       with:
         name: android debug
         path: android-debug-build.apk
         if-no-files-found: error
+
+    - name: Build Android (Release)
+      run: filename="android-release-build.apk"; npx monaca remote build android --skipUpload --build-type=release --output "./$filename";
     - uses: actions/upload-artifact@v2
       with:
         name: android release
         path: android-release-build.apk
         if-no-files-found: error
+
+    - name: Build iOS (Debug)
+      run: filename="ios-debug-build.ipa"; npx monaca remote build ios --skipUpload --build-type=debug --output "./$filename";
     - uses: actions/upload-artifact@v2
       with:
         name: ios debug
         path: ios-debug-build.ipa
         if-no-files-found: error
+
+    - name: Build iOS (Release)
+      run: filename="ios-release-build.ipa"; npx monaca remote build ios --skipUpload --build-type=release --output "./$filename";
     - uses: actions/upload-artifact@v2
       with:
         name: ios release
