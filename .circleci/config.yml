@@ -135,12 +135,10 @@ workflows:
             - upload
       - build_android_release:
           requires:
-            - upload
             - build_android_debug
       - build_ios_debug:
           requires:
             - upload
       - build_ios_release:
           requires:
-            - upload
             - build_ios_debug
