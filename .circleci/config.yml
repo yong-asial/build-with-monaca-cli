@@ -27,8 +27,8 @@ jobs:
       - checkout
 
       - run:
-        name: Login To Monaca
-        command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
+          name: Login To Monaca
+          command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
 
       - run:
           name: Upload to Monaca Cloud
@@ -42,8 +42,8 @@ jobs:
       - checkout
 
       - run:
-        name: Login To Monaca
-        command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
+          name: Login To Monaca
+          command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
 
       - run:
           name: Build Android (debug)
@@ -64,8 +64,8 @@ jobs:
       - checkout
 
       - run:
-        name: Login To Monaca
-        command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
+          name: Login To Monaca
+          command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
 
       - run:
           name: Build Android (release)
@@ -86,8 +86,8 @@ jobs:
       - checkout
 
       - run:
-        name: Login To Monaca
-        command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
+          name: Login To Monaca
+          command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
 
       - run:
           name: Build ios (debug)
@@ -108,8 +108,8 @@ jobs:
       - checkout
 
       - run:
-        name: Login To Monaca
-        command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
+          name: Login To Monaca
+          command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
 
       - run:
           name: Build ios (release)
