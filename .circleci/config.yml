@@ -34,7 +34,7 @@ jobs:
           name: Upload to Monaca Cloud
           command: npx monaca upload --force
 
-  build_android_debug:
+  buildAndroidDebug:
     docker:
       - image: circleci/node:lts
 
@@ -56,7 +56,7 @@ jobs:
           name: Remove Build File
           command: rm -rf android-debug-build.apk
 
-  build_android_release:
+  buildAndroidRelease:
     docker:
       - image: circleci/node:lts
 
@@ -78,7 +78,7 @@ jobs:
           name: Remove Build File
           command: rm -rf android-release-build.apk
 
-  build_ios_debug:
+  buildIosDebug:
     docker:
       - image: circleci/node:lts
 
@@ -100,7 +100,7 @@ jobs:
           name: Remove Build File
           command: rm -rf ios-debug-build.ipa
 
-  build_ios_release:
+  buildIosRelease:
     docker:
       - image: circleci/node:lts
 
@@ -130,15 +130,15 @@ workflows:
       - upload:
           requires:
             - login
-      - build_android_debug:
+      - buildAndroidDebug:
           requires:
             - upload
-      - build_android_release:
+      - buildAndroidRelease:
           requires:
-            - build_android_debug
-      - build_ios_debug:
+            - buildAndroidDebug
+      - buildIosDebug:
           requires:
             - upload
-      - build_ios_release:
+      - buildIosRelease:
           requires:
-            - build_ios_debug
+            - buildIosDebug
