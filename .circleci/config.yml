@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build:
+  login:
     docker:
       - image: circleci/node:lts
 
@@ -19,17 +19,43 @@ jobs:
           name: Login To Monaca
           command: echo $MONACA_PASSWORD | npx monaca login $MONACA_EMAIL
 
+  upload:
+    docker:
+      - image: circleci/node:lts
+
+    steps:
+      - checkout
+
       - run:
           name: Upload to Monaca Cloud
           command: npx monaca upload --force
+
+  build_android:
+    docker:
+      - image: circleci/node:lts
+
+    steps:
+      - checkout
 
       - run:
           name: Build Android (Debug)
           command: npx monaca remote build android --skipUpload --build-type=debug --output "./android-debug-build.apk";
 
-      - run:
-          name: List Project Files
-          command: ls -la;
-
       - store_artifacts:
           path: android-debug-build.apk
+
+      - run:
+          name: Remove Build File
+          command: rm -rf android-debug-build.apk
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - login
+      - upload:
+          requires:
+            - login
+      - build_android:
+          requires:
+            - upload
